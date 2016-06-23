@@ -1,0 +1,71 @@
+"b1;" parsed.
+T1 was created. **
+ts(T1)=1.
+"r1(Z); " parsed.
+-----
+T1 requested a shared lock on Z.
+T1 read Z!
+tsR(Z)= 1.
+"b2; " parsed.
+T2 was created. **
+ts(T2)=2.
+"r1(Y); " parsed.
+-----
+T1 requested a shared lock on Y.
+T1 read Y!
+tsR(Y)= 1.
+"w1(Z);" parsed.
+-----
+T1 requested an exclusive lock on Z.
+T1 upgraded lock on Z.
+T1 wrote Z!
+"r1(Z);" parsed.
+-----
+T1 requested a shared lock on Z.
+T1 already has the appropriate lock on Z.
+T1 read Z!
+tsR(Z)= 1.
+"w1(Z);" parsed.
+-----
+T1 requested an exclusive lock on Z.
+T1 already has the appropriate lock on Z.
+T1 wrote Z!
+tsW(Z)= 1.
+"b3; " parsed.
+T3 was created. **
+ts(T3)=3.
+"r2(Y);" parsed.
+-----
+T2 requested a shared lock on Y.
+T2 read Y!
+tsR(Y)= 2.
+"e2; " parsed.
+-----
+T2 is partially committed.
+T2 was committed. **
+T2 released its lock on Y.
+"w1(Y);" parsed.
+-----
+T1 requested an exclusive lock on Y.
+Thomas write rule. tsR(Y)=2 > ts(T1)=1. Timestamp ordering violation. 
+T1 aborted & failed! **
+T1 did rollback.
+T1 released its lock on Z.
+T1 released its lock on Y.
+"r3(Z); " parsed.
+-----
+T3 requested a shared lock on Z.
+T3 read Z!
+tsR(Z)= 3.
+"e1; " parsed.
+"w3(Z); " parsed.
+-----
+T3 requested an exclusive lock on Z.
+T3 upgraded lock on Z.
+T3 wrote Z!
+"e3;" parsed.
+-----
+T3 is partially committed.
+T3 was committed. **
+T3 released its lock on Z.
+

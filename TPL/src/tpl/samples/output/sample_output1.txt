@@ -1,0 +1,88 @@
+"b1;" parsed.
+T1 was created. **
+ts(T1)=1.
+"r1 (Y); " parsed.
+-----
+T1 requested a shared lock on Y.
+T1 read Y!
+tsR(Y)= 1.
+"w1 (Y); " parsed.
+-----
+T1 requested an exclusive lock on Y.
+T1 upgraded lock on Y.
+T1 wrote Y!
+"r1 (Z); " parsed.
+-----
+T1 requested a shared lock on Z.
+T1 read Z!
+tsR(Z)= 1.
+"b3;" parsed.
+T3 was created. **
+ts(T3)=2.
+"r3 (X); " parsed.
+-----
+T3 requested a shared lock on X.
+T3 read X!
+tsR(X)= 2.
+"w3 (X); " parsed.
+-----
+T3 requested an exclusive lock on X.
+T3 upgraded lock on X.
+T3 wrote X!
+"w1 (Z); " parsed.
+-----
+T1 requested an exclusive lock on Z.
+T1 upgraded lock on Z.
+T1 wrote Z!
+"e1;" parsed.
+-----
+T1 is partially committed.
+T1 was committed. **
+T1 released its lock on Y.
+T1 released its lock on Z.
+"r3 (Y); " parsed.
+-----
+T3 requested a shared lock on Y.
+T3 read Y!
+tsR(Y)= 2.
+"b2;" parsed.
+T2 was created. **
+ts(T2)=3.
+"r2 (Z); " parsed.
+-----
+T2 requested a shared lock on Z.
+T2 read Z!
+tsR(Z)= 3.
+"w2 (Z); " parsed.
+-----
+T2 requested an exclusive lock on Z.
+T2 upgraded lock on Z.
+T2 wrote Z!
+"w3 (Y); " parsed.
+-----
+T3 requested an exclusive lock on Y.
+T3 upgraded lock on Y.
+T3 wrote Y!
+"e3;" parsed.
+-----
+T3 is partially committed.
+T3 was committed. **
+T3 released its lock on X.
+T3 released its lock on Y.
+"r2 (X); " parsed.
+-----
+T2 requested a shared lock on X.
+T2 read X!
+tsR(X)= 3.
+"w2 (X); " parsed.
+-----
+T2 requested an exclusive lock on X.
+T2 upgraded lock on X.
+T2 wrote X!
+"e2;" parsed.
+-----
+T2 is partially committed.
+T2 was committed. **
+T2 released its lock on Z.
+T2 released its lock on X.
+

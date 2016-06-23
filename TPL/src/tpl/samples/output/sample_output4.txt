@@ -1,0 +1,64 @@
+"b1;" parsed.
+T1 was created. **
+ts(T1)=1.
+"b2;" parsed.
+T2 was created. **
+ts(T2)=2.
+"b3;" parsed.
+T3 was created. **
+ts(T3)=3.
+"r1(A);" parsed.
+-----
+T1 requested a shared lock on A.
+T1 read A!
+tsR(A)= 1.
+"r2(A);" parsed.
+-----
+T2 requested a shared lock on A.
+T2 read A!
+tsR(A)= 2.
+"r3(C);" parsed.
+-----
+T3 requested a shared lock on C.
+T3 read C!
+tsR(C)= 3.
+"r2(B);" parsed.
+-----
+T2 requested a shared lock on B.
+T2 read B!
+tsR(B)= 2.
+"w1(B);" parsed.
+-----
+T1 requested an exclusive lock on B.
+Wait-die Protocol. Another transaction has an exclusive lock on B. T1 is the oldest transaction. Waiting...
+T1 is waiting...
+"w2(C);" parsed.
+-----
+T2 requested an exclusive lock on C.
+Wait-die Protocol. Another transaction has an exclusive lock on C. T2 is the oldest transaction. Waiting...
+T2 is waiting...
+"e3;" parsed.
+-----
+T3 is partially committed.
+T3 was committed. **
+T3 released its lock on C.
+T2 is active.
+T2 woke up!
+-----
+T2 requested an exclusive lock on C.
+Thomas write rule. tsR(C)=3 > ts(T2)=2. Timestamp ordering violation. 
+T2 aborted & failed! **
+T2 did rollback.
+T2 released its lock on A.
+T2 released its lock on B.
+T1 is active.
+T1 woke up!
+-----
+T1 requested an exclusive lock on B.
+Thomas write rule. tsR(B)=2 > ts(T1)=1. Timestamp ordering violation. 
+T1 aborted & failed! **
+T1 did rollback.
+T1 released its lock on A.
+"e2;" parsed.
+"e1;" parsed.
+

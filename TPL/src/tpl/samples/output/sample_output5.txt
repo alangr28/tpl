@@ -1,0 +1,135 @@
+"b1;" parsed.
+T1 was created. **
+ts(T1)=1.
+"b2;" parsed.
+T2 was created. **
+ts(T2)=2.
+"b3;" parsed.
+T3 was created. **
+ts(T3)=3.
+"w1(A);" parsed.
+-----
+T1 requested an exclusive lock on A.
+T1 wrote A!
+tsW(A)= 1.
+"r2(B);" parsed.
+-----
+T2 requested a shared lock on B.
+T2 read B!
+tsR(B)= 2.
+"r1(A);" parsed.
+-----
+T1 requested a shared lock on A.
+T1 already has the appropriate lock on A.
+T1 read A!
+tsR(A)= 1.
+"w1(A);" parsed.
+-----
+T1 requested an exclusive lock on A.
+T1 already has the appropriate lock on A.
+T1 wrote A!
+tsW(A)= 1.
+"r1(B);" parsed.
+-----
+T1 requested a shared lock on B.
+T1 read B!
+tsR(B)= 2.
+"w3(C);" parsed.
+-----
+T3 requested an exclusive lock on C.
+T3 wrote C!
+tsW(C)= 3.
+"r2(A);" parsed.
+-----
+T2 requested a shared lock on A.
+Wait-die Protocol. T2 requested A, but it is 'younger' than T1.
+T2 did rollback.
+T2 released its lock on B.
+T2 was aborted!
+"w2(A);" parsed.
+-----
+T2 requested a shared lock on B.
+T2 read B!
+tsR(B)= 2.
+-----
+T2 requested a shared lock on A.
+Wait-die Protocol. T2 requested A, but it is 'younger' than T1.
+T2 did rollback.
+T2 released its lock on B.
+T2 was aborted!
+"w3(A);" parsed.
+-----
+T3 requested an exclusive lock on A.
+Wait-die Protocol. T3 requested A, but it is 'younger' than T1.
+T3 did rollback.
+T3 released its lock on C.
+T3 was aborted!
+"e3;" parsed.
+-----
+T2 requested a shared lock on B.
+-----
+"r1(C);" parsed.
+T2 read B!
+tsR(B)= 2.
+-----
+T3 requested an exclusive lock on C.
+T2 requested a shared lock on A.
+Wait-die Protocol. T2 requested A, but it is 'younger' than T1.
+T3 wrote C!
+-----
+T2 did rollback.
+T1 requested a shared lock on C.
+tsW(C)= 3.
+-----
+Wait-die Protocol. T1 requested C, but it is 'older' than T3. Waiting...
+T2 released its lock on B.
+T3 requested an exclusive lock on A.
+T1 is waiting...
+T2 was aborted!
+Wait-die Protocol. T3 requested A, but it is 'younger' than T1.
+T3 did rollback.
+T3 released its lock on C.
+T1 is active.
+T1 woke up!
+T3 was aborted!
+-----
+T1 requested a shared lock on C.
+Timestamp Protocol. Some younger transaction wrote the value of the item +C. 
+T1 aborted & failed! **
+T1 did rollback.
+T1 released its lock on A.
+T1 released its lock on B.
+"w2(C);" parsed.
+-----
+-----
+"e2;" parsed.
+T2 requested a shared lock on B.
+T3 requested an exclusive lock on C.
+T2 read B!
+T3 wrote C!
+tsW(C)= 3.
+-----
+tsR(B)= 2.
+T3 requested an exclusive lock on A.
+-----
+T3 wrote A!
+tsW(A)= 3.
+-----
+T2 requested a shared lock on A.
+T3 is partially committed.
+Wait-die Protocol. T2 requested A, but it is 'older' than T3. Waiting...
+T3 was committed. **
+T2 is waiting...
+T3 released its lock on C.
+T3 released its lock on A.
+T2 is active.
+T2 woke up!
+-----
+T2 requested a shared lock on A.
+Timestamp Protocol. Some younger transaction wrote the value of the item +A. 
+T2 aborted & failed! **
+T2 did rollback.
+T2 released its lock on B.
+"r1(D);" parsed.
+"e1;" parsed.
+
